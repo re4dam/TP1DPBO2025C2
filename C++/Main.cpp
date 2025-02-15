@@ -1,4 +1,5 @@
 #include "Petshop.cpp"
+#include <cstring>
 
 int main() {
     list<Petshop> produk;      // buat List untuk produk produk petshop
@@ -7,33 +8,54 @@ int main() {
     string ID, nama, kategori; // temporary variabel khusus string
     int harga;                 // temporary variabel khusus integer
 
-    // Tampilkan pilihan yang bisa diambil user
-    cout << "Opsi Menu" << endl;
-    cout << "1. Add product" << endl;
-    cout << "2. Show products" << endl;
-    cout << "3. Update product" << endl;
-    cout << "4. Delete product" << endl;
-    cout << "5. Find product by name" << endl;
-    cout << "6. Exit" << endl;
-
     while (exit == false) {
+        // Tampilkan pilihan yang bisa diambil user
+        cout << "Opsi Menu" << endl;
+        cout << "1. Add product" << endl;
+        cout << "2. Show products" << endl;
+        cout << "3. Update product" << endl;
+        cout << "4. Delete product" << endl;
+        cout << "5. Find product by name" << endl;
+        cout << "6. Exit" << endl;
+        cout << endl;
+
         cin >> option; // berikan user kesempatan untuk memilih tindakan
+        bool loop = true;
 
-        list<Petshop>::iterator it = produk.begin();  // Iterator dari List Produk
-        if (option == 1) {                            // Menambahkan data produk
-            cin >> ID >> nama >> kategori >> harga;   // Menginput atribut-atribut produk
-            Petshop input(ID, nama, kategori, harga); // Menginstansiasi ke dalam objek
+        list<Petshop>::iterator it = produk.begin(); // Iterator dari List Produk
+        if (option == 1) {                           // Menambahkan data produk
+            cin >> ID >> nama >> kategori >> harga;  // Menginput atribut-atribut produk
+            while (it != produk.end() && loop == true) {
+                if (it->get_ID() == ID) {
+                    loop = false;
+                } else {
+                    it++;
+                }
+            }
+            if (loop == true) {
+                Petshop input(ID, nama, kategori, harga); // Menginstansiasi ke dalam objek
+                produk.push_back(input);                  // Memasukkan objek ke dalam List produk
+            } else {
+                cout << "ID produk sudah ada, silahkan gunakan ID baru" << endl;
+            }
+        } else if (option == 2) { // Menampilkan produk-produk
 
-            produk.push_back(input); // Memasukkan objek ke dalam List produk
-        } else if (option == 2) {    // Menampilkan produk-produk
+            // Print table header
+            cout << "---------------------------------------------------------" << endl;
+            cout << "ID\t| Nama\t\t| Kategori\t| Harga\t\t|" << endl;
+            cout << "---------------------------------------------------------" << endl;
+
             while (it != produk.end()) {
-                cout << it->get_ID() << " " << it->get_nama() << " " << it->get_kategori() << " " << it->get_harga() << endl; // Menampilkan data
+                cout << it->get_ID() << "\t| " << it->get_nama() << "\t| " << it->get_kategori() << "\t| " << it->get_harga() << "\t\t|" << endl; // Menampilkan data
 
                 it++; // Melanjutkan iterasi dari List
             }
+
+            // Print table footer
+            cout << "---------------------------------------------------------" << endl;
+            cout << endl;
         } else if (option == 3) {                   // Memperbarui data dari produk
             cin >> ID >> nama >> kategori >> harga; // Memasukkan ID produk yang ingin diubah, beserta hasil perubahannya
-            bool loop = true;
             while (it != produk.end() && loop == true) {
                 if (it->get_ID() == ID) {       // ketika ID ditemukan
                     it->set_nama(nama);         // Mengatur nama produk
@@ -46,7 +68,6 @@ int main() {
             }
         } else if (option == 4) { // Menghapus sebuah data dari List produk
             cin >> ID;            // Memasukkan ID produk yang ingin dihapus
-            bool loop = true;
             while (it != produk.end() && loop == true) {
                 if (it->get_ID() == ID) {  // ketika ID ditemukan
                     it = produk.erase(it); // Menghapus data produk
@@ -57,7 +78,6 @@ int main() {
             }
         } else if (option == 5) { // Mencari data sesuai nama produk
             cin >> nama;          // memasukkan nama produk yang ingin dicari
-            bool loop = true;
             while (it != produk.end() && loop == true) {
                 if (it->get_nama() == ID) {                                                                                       // ketika nama produk ditemukan
                     cout << it->get_ID() << " " << it->get_nama() << " " << it->get_kategori() << " " << it->get_harga() << endl; // tampilkan produk tersebut
