@@ -12,10 +12,10 @@ khusus untuk bahasa PHP ada atribut tambahan, yaitu:
 * Gambar Produk
 
 ## Alur Program
-- Untuk menjalankan program, run sesuai bahasa pemrograman yang ingin dieksekusi
+- Untuk menjalankan program, jalankan sesuai bahasa pemrograman yang ingin dieksekusi.
 - Akan muncul tampilan menu:
-    1. menu ADD untuk menambahkan data
-    2. menu UPDATE untuk mengubah data yang dipilih sesuai IDnya
-    3. menu DELETE untuk menghapus data yang dipilih sesuai IDnya
-    4. menu SHOW untuk menampilkan seluruh data
-    5. menu FIND untuk mencari data yang dipilih sesuai Namanya
+    1. **ADD** → Menambahkan data  
+    2. **UPDATE** → Mengubah data yang dipilih sesuai ID-nya  
+    3. **DELETE** → Menghapus data yang dipilih sesuai ID-nya  
+    4. **SHOW** → Menampilkan seluruh data  
+    5. **FIND** → Mencari data yang dipilih sesuai namanya  
