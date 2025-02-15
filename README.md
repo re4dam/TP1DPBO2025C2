@@ -8,6 +8,7 @@ Di dalam class Petshop memiliki 4 atribut, yaitu:
 * Nama Produk
 * Kategori Produk
 * Harga Produk
+
 khusus untuk bahasa PHP ada atribut tambahan, yaitu:
 * Gambar Produk
 
