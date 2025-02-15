@@ -16,8 +16,8 @@ khusus untuk bahasa PHP ada atribut tambahan, yaitu:
 - Untuk menjalankan program, jalankan sesuai bahasa pemrograman yang ingin dieksekusi.
 - Akan muncul tampilan menu:
 
-1. **ADD** → Menambahkan data  
-2. **UPDATE** → Mengubah data yang dipilih sesuai ID-nya  
-3. **DELETE** → Menghapus data yang dipilih sesuai ID-nya  
-4. **SHOW** → Menampilkan seluruh data  
-5. **FIND** → Mencari data yang dipilih sesuai namanya  
+1. [1] **ADD** → Menambahkan data  
+2. [2] **UPDATE** → Mengubah data yang dipilih sesuai ID-nya  
+3. [3] **DELETE** → Menghapus data yang dipilih sesuai ID-nya  
+4. [4] **SHOW** → Menampilkan seluruh data  
+5. [5] **FIND** → Mencari data yang dipilih sesuai namanya  
