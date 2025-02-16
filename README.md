@@ -20,3 +20,9 @@ khusus untuk bahasa PHP ada atribut tambahan, yaitu:
     - `3` **DELETE** → Menghapus data yang dipilih sesuai ID-nya  
     - `4` **SHOW** → Menampilkan seluruh data  
     - `5` **FIND** → Mencari data yang dipilih sesuai namanya  
+
+## Dokumentasi C++
+![Phase 1](C++/img1.png)
+![Phase 2](C++/img2.png)
+![Phase 3](C++/img3.png)
+![Phase 4](C++/img4.png)
