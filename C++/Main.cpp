@@ -35,8 +35,9 @@ int main() {
             if (loop == true) {
                 Petshop input(ID, nama, kategori, harga); // Menginstansiasi ke dalam objek
                 produk.push_back(input);                  // Memasukkan objek ke dalam List produk
+                cout << "ADD product successful" << endl;
             } else {
-                cout << "ID produk sudah ada, silahkan gunakan ID baru" << endl;
+                cout << "ID product already exist, please use a new ID" << endl;
             }
         } else if (option == 2) { // Menampilkan produk-produk
 
@@ -66,6 +67,12 @@ int main() {
                     it++; // Mengiterasikan list
                 }
             }
+
+            if (loop == true) {
+                cout << "No matching ID was found" << endl;
+            } else {
+                cout << "Data updated successfully" << endl;
+            }
         } else if (option == 4) { // Menghapus sebuah data dari List produk
             cin >> ID;            // Memasukkan ID produk yang ingin dihapus
             while (it != produk.end() && loop == true) {
@@ -76,15 +83,27 @@ int main() {
                     it++; // Mengiterasikan list
                 }
             }
+
+            if (loop == true) {
+                cout << "No matching ID was found" << endl;
+            } else {
+                cout << "Data erased successfully" << endl;
+            }
         } else if (option == 5) { // Mencari data sesuai nama produk
             cin >> nama;          // memasukkan nama produk yang ingin dicari
             while (it != produk.end() && loop == true) {
-                if (it->get_nama() == ID) {                                                                                       // ketika nama produk ditemukan
+                if (it->get_nama() == nama) {                                                                                     // ketika nama produk ditemukan
                     cout << it->get_ID() << " " << it->get_nama() << " " << it->get_kategori() << " " << it->get_harga() << endl; // tampilkan produk tersebut
                     loop = false;                                                                                                 // mengeluarkan dari perulangan
                 } else {
                     it++; // Mengiterasikan list
                 }
+            }
+
+            if (loop == true) {
+                cout << "No matching name was found" << endl;
+            } else {
+                cout << "Data found" << endl;
             }
         } else if (option == 6) { // Exit dari program
             exit = true;          // merubah state dari false menjadi true
