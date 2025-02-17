@@ -16,10 +16,11 @@ khusus untuk bahasa PHP ada atribut tambahan, yaitu:
 - Untuk menjalankan program, jalankan sesuai bahasa pemrograman yang ingin dieksekusi.
 - Akan muncul tampilan menu:
     - `1` **ADD** → Menambahkan data  
-    - `2` **UPDATE** → Mengubah data yang dipilih sesuai ID-nya  
-    - `3` **DELETE** → Menghapus data yang dipilih sesuai ID-nya  
-    - `4` **SHOW** → Menampilkan seluruh data  
+    - `2` **SHOW** → Menampilkan seluruh data  
+    - `3` **UPDATE** → Mengubah data yang dipilih sesuai ID-nya  
+    - `4` **DELETE** → Menghapus data yang dipilih sesuai ID-nya  
     - `5` **FIND** → Mencari data yang dipilih sesuai namanya  
+    * '6' EXIT -> Keluar dari program
 
 ## Dokumentasi C++
 ![Phase 1](C++/img1.png)
