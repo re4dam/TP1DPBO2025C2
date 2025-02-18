@@ -42,16 +42,15 @@ while state:
                     product.get_ID()
                     + product.get_nama()
                     + product.get_kategori()
-                    + product.get_harga
+                    + product.get_harga()
                 )
-                print()
+            print()
     elif option == 3:
         input_id = input("Masukkan ID untuk diupdate: ")
         found = False
         index = 0
         while not found and index < len(products):
-            product = products[index]
-            if product.get_ID() == input_id:
+            if products[index].get_ID() == input_id:
                 new_nama = input("Masukkan Nama baru: ")
                 new_kategori = input("Masukkan Kategori baru: ")
                 try:
@@ -60,9 +59,9 @@ while state:
                     print("Harga harus berupa angka. Silakan coba lagi.")
                     continue
 
-                product.set_nama(new_nama)
-                product.set_kategori(new_kategori)
-                product.set_harga(new_harga)
+                products[index].set_nama(new_nama)
+                products[index].set_kategori(new_kategori)
+                products[index].set_harga(new_harga)
                 print("Produk berhasil diupdate.")
                 found = True
             else:
@@ -75,9 +74,28 @@ while state:
         found = False
         index = 0
         while not found and index < len(products):
-            product = products[index]
-            if product.get_ID() == input_id:
-                product.pop(index)
+            if products[index].get_ID() == input_id:
+                products.pop(index)
                 found = True
             else:
                 index += 1
+    elif option == 5:
+        input_nama = input("Masukkan nama untuk dicari: ")
+        found = False
+        index = 0
+        for product in products:
+            if product.get_nama() == input_nama:
+                print(
+                    product.get_ID()
+                    + product.get_nama()
+                    + product.get_kategori()
+                    + product.get_harga()
+                )
+                found = True
+            print()
+        if not found:
+            print("Produk dengan nama tersebut tidak ditemukan")
+    elif option == 6:
+        state = False
+    else:
+        print("Permintaan tidak dikenal, ulangi kembali")
