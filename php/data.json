@@ -1,0 +1,23 @@
+[
+    {
+        "id": "67b89cc95d1e6",
+        "nama": "Luvpetz",
+        "kategori": "minuman",
+        "harga": 28000,
+        "gambar": "uploads\/67b89d1067b7a_sg-11134201-22110-tvm8752zsckv80.jpg"
+    },
+    {
+        "id": "67b89cde8d34e",
+        "nama": "Pawprints",
+        "kategori": "makanan",
+        "harga": 27500,
+        "gambar": "uploads\/67b89cde8cca9_data.jpeg.webp"
+    },
+    {
+        "id": "67b89cf43e198",
+        "nama": "monyet",
+        "kategori": "mainan",
+        "harga": 150000,
+        "gambar": "uploads\/67b89cf43bff0_WhatsApp Image 2025-02-14 at 10.46.52.jpeg"
+    }
+]
