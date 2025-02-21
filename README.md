@@ -20,7 +20,7 @@ khusus untuk bahasa PHP ada atribut tambahan, yaitu:
     - `3` **UPDATE** → Mengubah data yang dipilih sesuai ID-nya  
     - `4` **DELETE** → Menghapus data yang dipilih sesuai ID-nya  
     - `5` **FIND** → Mencari data yang dipilih sesuai namanya  
-    * `6` EXIT -> Keluar dari program
+    * `6` **EXIT** -> Keluar dari program
 
 ## Dokumentasi C++
 ![Phase 1](C++/image/img1.png)
