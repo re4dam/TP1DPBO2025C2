@@ -34,3 +34,10 @@ khusus untuk bahasa PHP ada atribut tambahan, yaitu:
 ![Phase 3](Python/image/img3.png)
 ![Phase 4](Python/image/img4.png)
 ![Phase 5](Python/image/img5.png)
+
+## Dokumentasi Java
+![Phase 1](Java/image/img1.png)
+![Phase 2](Java/image/img2.png)
+![Phase 3](Java/image/img3.png)
+![Phase 4](Java/image/img4.png)
+![Phase 5](Java/image/img5.png)

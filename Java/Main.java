@@ -38,9 +38,8 @@ public class Main {
 
                 boolean idExists = false;
                 // perulangan hingga ditemukan ID yang sama
-                while (iterator.hasNext() && idExists == false) {
-                    Petshop p = iterator.next();
-                    if (p.get_ID() == ID) { // jika sama maka perulangan berhenti
+                for (Petshop p : produk) {
+                    if (p.get_ID().equals(ID)) {
                         idExists = true;
                     }
                 }
