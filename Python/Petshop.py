@@ -1,4 +1,5 @@
 class Petshop:
+    # private attribute for Petshop
     __ID = ""
     __nama = ""
     __kategori = ""
@@ -10,35 +11,35 @@ class Petshop:
         self.__kategori = input_kategori  # Private attribute
         self.__harga = input_harga  # Private attribute
 
-    # ID methods
+    # Metode untuk mengambil/mengatur ID
     def get_ID(self):
         return self.__ID
 
     def set_ID(self, input_id):
         self.__ID = input_id
 
-    # nama methods
+    # Metode untuk mengambil/mengatur nama
     def get_nama(self):
         return self.__nama
 
     def set_nama(self, input_nama):
         self.__nama = input_nama
 
-    # kategori methods
+    # Metode untuk mengambil/mengatur kategori
     def get_kategori(self):
         return self.__kategori
 
     def set_kategori(self, input_kategori):
         self.__kategori = input_kategori
 
-    # harga methods
+    # Metode untuk mengambil/mengatur harga
     def get_harga(self):
         return self.__harga
 
     def set_harga(self, input_harga):
         if (
             isinstance(input_harga, int) and input_harga >= 0
-        ):  # Validate harga is a non-negative integer
+        ):  # input_harga diperiksa apakah integer dan lebih dari sama dengan 0
             self.__harga = input_harga
-        else:
+        else:  # jika tidak maka output error
             raise ValueError("Harga must be a non-negative integer.")
