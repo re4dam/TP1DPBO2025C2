@@ -1,51 +1,52 @@
 <?php
 include "Petshop.php";
-$file = 'data.json';
 
+// Array untuk menyimpan data Petshop (penyimpanan dalam memori)
 $data = [];
-if (file_exists($file)) {
-    $json = file_get_contents($file);
-    $decodedData = json_decode($json, true) ?: [];
 
-    // Convert associative arrays to Petshop objects
-    foreach ($decodedData as $item) {
-        $data[] = new Petshop($item['id'], $item['nama'], $item['kategori'], $item['harga'], $item['gambar']);
-    }
-}
-
-// Melakukan request dengan metode POST
+// Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? ''; // Mengambil action yang didapatkan dari POST
 
     switch ($action) {
             // Membuat data baru
         case 'create':
+            $id = htmlspecialchars($_POST['id']); // Mengambil ID yang dimasukkan pengguna
+            $name = htmlspecialchars($_POST['name']);
+            $kategori = htmlspecialchars($_POST['kategori']);
+            $harga = htmlspecialchars($_POST['harga']);
             $gambarPath = '';
-            if (!empty($_FILES['gambar']['name'])) { // Corrected key: 'name'
-                $targetDir = "uploads/";
-                if (!file_exists($targetDir)) {
-                    mkdir($targetDir, 0777, true);
+
+            // Memeriksa apakah ID sudah ada
+            $idExists = false;
+            foreach ($data as $item) {
+                if ($item->get_ID() === $id) {
+                    $idExists = true;
+                    break;
                 }
-                $gambarPath = $targetDir . uniqid() . "_" . basename($_FILES['gambar']['name']); // Corrected key: 'name'
-                move_uploaded_file($_FILES['gambar']['tmp_name'], $gambarPath); // Corrected key: 'tmp_name'
             }
 
-            // Menginstansiasi Object Petshop
-            $newItem = new Petshop(
-                uniqid(), // membuat ID unik
-                htmlspecialchars($_POST['name']), // memasukkan namanya
-                htmlspecialchars($_POST['kategori']), // memasukkan kategori
-                htmlspecialchars($_POST['harga']), // memasukkan harga
-                $gambarPath // memasukkan gambar beserta path lokasinya
-            );
+            if ($idExists) {
+                echo "<script>alert('ID sudah ada. Silakan gunakan ID yang lain.');</script>";
+            } else {
+                // Handle file upload
+                if (!empty($_FILES['gambar']['name'])) {
+                    $targetDir = "uploads/";
+                    if (!file_exists($targetDir)) {
+                        mkdir($targetDir, 0777, true);
+                    }
+                    $gambarPath = $targetDir . uniqid() . "_" . basename($_FILES['gambar']['name']);
+                    move_uploaded_file($_FILES['gambar']['tmp_name'], $gambarPath);
+                }
 
-            // Object dimasukkan ke dalam arrray
-            $data[] = $newItem;
+                // Membuat objek Petshop baru
+                $newItem = new Petshop($id, $name, $kategori, $harga, $gambarPath);
+                $data[] = $newItem; // Menambahkan objek ke dalam array
+            }
             break;
 
             // Mengupdate data yang sudah ada
         case 'update':
-            // Update existing entry
             $id = $_POST['id'];
             foreach ($data as &$item) {
                 if ($item->get_ID() === $id) {
@@ -53,13 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $item->set_Kategori(htmlspecialchars($_POST['kategori']));
                     $item->set_Harga(htmlspecialchars($_POST['harga']));
 
-                    if (!empty($_FILES['gambar']['name'])) { // Corrected key: 'name'
+                    if (!empty($_FILES['gambar']['name'])) {
                         $targetDir = "uploads/";
                         if (!file_exists($targetDir)) {
                             mkdir($targetDir, 0777, true);
                         }
-                        $gambarPath = $targetDir . uniqid() . "_" . basename($_FILES['gambar']['name']); // Corrected key: 'name'
-                        move_uploaded_file($_FILES['gambar']['tmp_name'], $gambarPath); // Corrected key: 'tmp_name'
+                        $gambarPath = $targetDir . uniqid() . "_" . basename($_FILES['gambar']['name']);
+                        move_uploaded_file($_FILES['gambar']['tmp_name'], $gambarPath);
                         $item->set_Gambar($gambarPath);
                     }
                     break;
@@ -72,24 +73,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'];
             foreach ($data as $key => $item) {
                 if ($item->get_ID() === $id) {
-                    // Delete the image file
+                    // Menghapus file gambar
                     if ($item->get_Gambar() && file_exists($item->get_Gambar())) {
                         unlink($item->get_Gambar());
                     }
-                    unset($data[$key]);
+                    unset($data[$key]); // Menghapus data dari array
                 }
             }
             break;
     }
 
-    // Convert objects to arrays before saving
-    $dataToSave = array_map(fn($item) => $item->ToArray(), $data);
-    file_put_contents($file, json_encode(array_values($dataToSave), JSON_PRETTY_PRINT), LOCK_EX);
+    // Redirect untuk menghindari form resubmission
     header('Location: index.php');
     exit;
 }
 
-// Get entry to edit (if any)
+// Mengambil data untuk diedit (jika ada)
 $editItem = null;
 if (isset($_GET['edit'])) {
     $editId = $_GET['edit'];
@@ -107,7 +106,7 @@ if (isset($_GET['edit'])) {
 
 <head>
     <title>CRUD without Database</title>
-    <!-- CSS styling for table dan form -->
+    <!-- CSS styling untuk tabel dan form -->
     <style>
         table {
             border-collapse: collapse;
@@ -133,37 +132,35 @@ if (isset($_GET['edit'])) {
 <body>
     <h1>Petshop Manager</h1>
 
-    <!-- Create/Update Form -->
+    <!-- Form Create/Update -->
     <form method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <!-- id tersembunyi untuk id produk -->
             <input type="hidden" name="action" value="<?= $editItem ? 'update' : 'create' ?>">
             <?php if ($editItem): ?>
                 <input type="hidden" name="id" value="<?= htmlspecialchars($editItem->get_ID()) ?>">
+            <?php else: ?>
+                <!-- Input untuk ID produk yang dimasukkan pengguna -->
+                <label>ID:</label>
+                <input type="text" name="id" value="<?= htmlspecialchars($editItem ? $editItem->get_ID() : '') ?>" required>
             <?php endif; ?>
 
-            <!-- input untuk nama produk -->
             <label>Name:</label>
             <input type="text" name="name" value="<?= htmlspecialchars($editItem ? $editItem->get_Nama() : '') ?>" required>
         </div>
 
         <div class="form-group">
-            <!-- input untuk kategori produk -->
             <label>Kategori:</label>
             <input type="text" name="kategori" value="<?= htmlspecialchars($editItem ? $editItem->get_Kategori() : '') ?>" required>
         </div>
 
         <div class="form-group">
-            <!-- input untuk harga produk -->
             <label>Harga:</label>
             <input type="number" name="harga" value="<?= htmlspecialchars($editItem ? $editItem->get_Harga() : '') ?>" required>
         </div>
 
         <div class="form-group">
-            <!-- input untuk memasukkan gambar produk -->
             <label>Upload Image:</label>
             <input type="file" name="gambar" accept="image/*">
-            <!-- kondisi ketika mengedit/ingin mereplace gambar baru -->
             <?php if ($editItem && $editItem->get_Gambar()): ?>
                 <p>Current Image:</p>
                 <img src="<?= htmlspecialchars($editItem->get_Gambar()) ?>" width="100">
@@ -176,21 +173,23 @@ if (isset($_GET['edit'])) {
         <?php endif; ?>
     </form>
 
-    <!-- Data Table -->
+    <!-- Tabel Data -->
     <?php if (!empty($data)): ?>
         <table>
             <tr>
                 <th>No</th>
+                <th>ID</th>
                 <th>Image</th>
                 <th>Name</th>
                 <th>Kategori</th>
                 <th>Harga</th>
                 <th>Actions</th>
             </tr>
-            <?php $iterasi = 1; // Initialize the counter
+            <?php $iterasi = 1; // Inisialisasi counter
             foreach ($data as $item): ?>
                 <tr>
                     <td><?php echo $iterasi; ?></td>
+                    <td><?= htmlspecialchars($item->get_ID()) ?></td>
                     <td>
                         <?php if ($item->get_Gambar()): ?>
                             <img src="<?= htmlspecialchars($item->get_Gambar()) ?>" width="100">
@@ -210,7 +209,7 @@ if (isset($_GET['edit'])) {
                         </form>
                     </td>
                 </tr>
-            <?php $iterasi++; // Increment the counter
+            <?php $iterasi++; // Increment counter
             endforeach; ?>
         </table>
     <?php else: ?>
