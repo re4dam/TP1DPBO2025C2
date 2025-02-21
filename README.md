@@ -23,7 +23,14 @@ khusus untuk bahasa PHP ada atribut tambahan, yaitu:
     * `6` EXIT -> Keluar dari program
 
 ## Dokumentasi C++
-![Phase 1](C++/img1.png)
-![Phase 2](C++/img2.png)
-![Phase 3](C++/img3.png)
-![Phase 4](C++/img4.png)
+![Phase 1](C++/image/img1.png)
+![Phase 2](C++/image/img2.png)
+![Phase 3](C++/image/img3.png)
+![Phase 4](C++/image/img4.png)
+
+## Dokumentasi Python
+![Phase 1](Python/image/img1.png)
+![Phase 2](Python/image/img2.png)
+![Phase 3](Python/image/img3.png)
+![Phase 4](Python/image/img4.png)
+![Phase 5](Python/image/img5.png)
